@@ -123,6 +123,7 @@ To use and contribute to the project, do the following:
 
 ## Design
 - The design can be find [here](https://www.figma.com/file/JNZKj3lachPypSOMBOhC1e/MMS-ALC-Mobile-Project?node-id=0%3A1)
+- Find the Prototypes here [Admin](https://www.figma.com/file/41d70tx02pRHlj8wvc3WN8/admin-prototype?node-id=0%3A1&t=7tieNXXu5Bu4IaEg-1) [Mentor Manager](https://www.figma.com/file/EeXcwPCnyvw5r45EgyCoIG/Mentor-Manager-prototype?node-id=0%3A1&t=JeA1aXVNqTcX2Yob-1) [Mentors](https://www.figma.com/file/bUlIQe3tOUH14n6aOUeAsF/mentor-prototype?node-id=0%3A1&t=gSJrcVE00ehsLMtU-1)
 - Work on your Team assigned task eg. Team 1, Team 2 etc.
 - NOTE: Stickly adhere to the style guide on the design, buttons, texts etc.
 
