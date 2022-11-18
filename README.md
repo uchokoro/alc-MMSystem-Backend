@@ -110,7 +110,7 @@ To use and contribute to the project, do the following:
 3. Open a feature branch from the 'dev' branch.
 4. Make sure the name is descriptive for your branch but not too long. Lead with what the the branch is doing
    eg new feature or bug but follow this pattern `type/branch-description` eg `feature/add-login-functionality`.
-5. Ensure your branch is up to date with latest changes before pushing.
+5. Ensure your branch is up to date with latest changes before pushing, (always pull from origin dev before you push).
 6. Reference the issue you worked on in your PRReference the issue you worked on in your PR.
 7. Open a pull request against the dev branch and request a review from your Team Lead.
 
