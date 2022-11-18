@@ -24,9 +24,9 @@
 
 ## Description
 
-# ALC Mentors Management System (MMS) Admin
+# ALC Mentors Management System (MMS) 
 
-This is the app for the Mentors Management system admin. MMS is a people management app that enables proper
+This is the app for the Mentors Management system. MMS is a people management app that enables proper
 coordination of mentors needed to execute projects, ranging from recruitment to off-boarding.
 
 
