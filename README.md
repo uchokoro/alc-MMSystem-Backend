@@ -1,30 +1,7 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 
-# ALC Mentors Management System (MMS) 
+# ALC Mentors Management System (MMS)
 
 This is the app for the Mentors Management system. MMS is a people management app that enables proper
 coordination of mentors needed to execute projects, ranging from recruitment to off-boarding.
@@ -87,22 +64,65 @@ users is listed as follows:
 - Message the list of unselected mentors
 - Engage on the discussion forum etc.
 
+##  Mentor
+- Apply to be a mentor
+- Receive application status message
+- Login/Logout
+- Set up my profile
+- Access assigned programs
+- Access the list of assigned tasks
+- Apply to be assigned to a program/tasks
+- Engage on the discussion forum
+- Browse assigned MM’s details
+- Compose updates on your assigned tasks
+- Share tasks’ update with your assigned MM
+- Receive notification from task’s assignment
+- Apply for mentor certificate
+- Receive notification to download or not qualify for the certificate
+- Chat 1:1 with any user
+
+##  Mentor Manager
+- Login/Logout
+- Set up my profile
+- Access assigned programs
+- Add mentor to the system
+- See the list of all mentors
+- Browse mentor’s details
+- Search mentors by name, category, region, program, engagement status
+- Assign/unassign mentor to program
+- Generate mentors’ report
+- Share the report
+- Delete mentor
+- Receive notification from mentor activities
+- Generate mentor certificate
+- Share the certificate with Admin
+- Send approval request for  mentor certificate
+- Send broadcast message to all MM
+- Send broadcast message to all mentors
+- Chat 1:1 with any user
+- Engage on the discussion forum
 
 # How to use this repo
 
 To use and contribute to the project, do the following:
 1. Fork it to your GitHub account.
-2. Clone the repo with the command git clone to your local mechine.
-3. Open a feature branch from the 'develop' branch.
+2. Clone the repo with the command git clone to your local machine.
+3. Open a feature branch from the 'dev' branch.
 4. Make sure the name is descriptive for your branch but not too long. Lead with what the the branch is doing
    eg new feature or bug but follow this pattern `type/branch-description` eg `feature/add-login-functionality`.
-5. Ensure your branch is up to date with latest changes before pushing.
+5. Ensure your branch is up to date with latest changes before pushing, (always pull from origin dev before you push).
 6. Reference the issue you worked on in your PRReference the issue you worked on in your PR.
-7. Open a pull request against the develop branch and request a review from your Team Lead.
+7. Open a pull request against the dev branch and request a review from your Team Lead.
+
+# Local Database Setup
+1. Install and create a MySQL database
+2. Create a .env file in the root directory
+3. Set the environment variables with your local database credentials (see .env.example for reference)
+4. Run `yarn migrate` to create the tables in your database
+5. Run `yarn seed` to seed the database with dummy data
 
 ## Design
 - The design can be find [here](https://www.figma.com/file/JNZKj3lachPypSOMBOhC1e/MMS-ALC-Mobile-Project?node-id=0%3A1)
-- Find the Prototypes here, [Admim](https://www.figma.com/file/41d70tx02pRHlj8wvc3WN8/admin-prototype?node-id=0%3A1&t=7tieNXXu5Bu4IaEg-1) [Mentor Manager](https://www.figma.com/file/EeXcwPCnyvw5r45EgyCoIG/Mentor-Manager-prototype?node-id=0%3A1&t=JeA1aXVNqTcX2Yob-1) [Mentor](https://www.figma.com/file/bUlIQe3tOUH14n6aOUeAsF/mentor-prototype?node-id=0%3A1&t=gSJrcVE00ehsLMtU-1)
 - Work on your Team assigned task eg. Team 1, Team 2 etc.
 - NOTE: Stickly adhere to the style guide on the design, buttons, texts etc.
 
