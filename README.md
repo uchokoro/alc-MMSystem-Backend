@@ -28,11 +28,20 @@ The main app features and functionalities are as follows:
 There are three groups of user categories namely `Admin`, `Mentor Manager(MM)`, and `Mentor`. The expected access levels for this group
 users is listed as follows:
 
-## Admin Category:
+## Common Features:
 - Login/Logout
+- Reset Password
+- Change Password
+- Update Profile
+- add job roles
+- List job roles
+- add tech stack
+- List tech stack
+
+## Admin Category:
 - Create program
-- Add MM
-- Add mentor
+- Invite MM
+- Invite mentor
 - Label/unlabel MM
 - Label/unlabel mentors
 - See the list of all MM
@@ -68,8 +77,6 @@ users is listed as follows:
 ##  Mentor
 - Apply to be a mentor
 - Receive application status message
-- Login/Logout
-- Set up my profile
 - Access assigned programs
 - Access the list of assigned tasks
 - Apply to be assigned to a program/tasks
@@ -83,8 +90,6 @@ users is listed as follows:
 - Chat 1:1 with any user
 
 ##  Mentor Manager
-- Login/Logout
-- Set up my profile
 - Access assigned programs
 - Add mentor to the system
 - See the list of all mentors
