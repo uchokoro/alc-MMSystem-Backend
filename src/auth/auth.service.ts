@@ -53,7 +53,7 @@ export class AuthService {
     signupCredentialsDto: SignupCredentialsDto,
   ): Promise<{ accessToken: string; user: User }> {
     if (signupCredentialsDto.role === UserRoles.Admin) {
-      if (signupCredentialsDto.email.endsWith('@andela.com')) {
+      if (!signupCredentialsDto.email.endsWith('@andela.com')) {
         throw new UnauthorizedException('Admin must have an @andela.com email');
       }
     }
