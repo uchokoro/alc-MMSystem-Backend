@@ -5,6 +5,8 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -88,6 +90,20 @@ export class User extends BaseEntity {
   })
   @JoinColumn()
   userDetails: UserDetail;
+
+  @ManyToOne((type) => User, (user) => user.mentors, {
+    cascade: true,
+    nullable: true,
+  })
+  @JoinColumn()
+  manger: User;
+
+  @OneToMany((type) => User, (user) => user.manger, {
+    cascade: true,
+    nullable: true,
+  })
+  @JoinColumn()
+  mentors: User[];
 
   @Column()
   @CreateDateColumn()
