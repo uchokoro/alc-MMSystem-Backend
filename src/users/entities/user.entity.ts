@@ -14,6 +14,12 @@ import {
 import * as bcrypt from 'bcrypt';
 import { UserDetail } from '../../user-details/entities/user-detail.entity';
 
+export enum UserRoles {
+  Admin = 'admin',
+  Mentor = 'mentor',
+  MentorManger = 'mentor-manger',
+}
+
 @Entity('users')
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -22,8 +28,8 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar' })
   name: string;
 
-  @Column({ type: 'varchar', nullable: false, unique: true })
-  phone: string;
+  @Column({ type: 'varchar', nullable: true })
+  phone?: string;
 
   @Column({ type: 'varchar', nullable: true, unique: true })
   email: string;
@@ -73,8 +79,8 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   dob: Date;
 
-  @Column({ type: 'varchar', default: 'Agent' })
-  role: string;
+  @Column({ enum: UserRoles, default: UserRoles.Mentor })
+  role: UserRoles;
 
   @Column({ type: 'varchar' })
   password: string;
