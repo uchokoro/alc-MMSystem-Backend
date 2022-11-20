@@ -4,10 +4,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { UserDetail } from '../../user-details/entities/user-detail.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -79,6 +82,12 @@ export class User extends BaseEntity {
 
   @Column({ type: 'varchar', nullable: true })
   salt: string;
+
+  @OneToOne((type) => UserDetail, (userDetails) => userDetails.user, {
+    cascade: true,
+  })
+  @JoinColumn()
+  userDetails: UserDetail;
 
   @Column()
   @CreateDateColumn()
