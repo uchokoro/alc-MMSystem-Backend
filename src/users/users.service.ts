@@ -24,7 +24,7 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }*/
 
-  async findOne(email = {}) {
+  async findOne(email = {}): Promise<User> {
     return await this.userRepository.findOne({ where: email });
   }
 

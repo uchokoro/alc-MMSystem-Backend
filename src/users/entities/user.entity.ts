@@ -99,7 +99,6 @@ export class User extends BaseEntity {
   manger: User;
 
   @OneToMany((type) => User, (user) => user.manger, {
-    cascade: true,
     nullable: true,
   })
   @JoinColumn()

@@ -1,5 +1,6 @@
 import {
   Column,
+  Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
@@ -9,17 +10,18 @@ import {
 import { User } from '../../users/entities/user.entity';
 import { Programme } from '../../programmes/entities/programme.entity';
 
+@Entity('user_details')
 export class UserDetail {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('text', { array: true, default: {} })
+  @Column('text')
   job_roles: string[];
 
-  @Column('text', { array: true, default: {} })
+  @Column('text')
   previous_programs: string[];
 
-  @Column('text', { array: true, default: {} })
+  @Column('text')
   tech_stacks: string[];
 
   @Column({ default: false })
@@ -40,9 +42,7 @@ export class UserDetail {
   @JoinColumn()
   programme: Programme;
 
-  @OneToOne((type) => User, (user) => user.userDetails, {
-    cascade: true,
-  })
+  @OneToOne((type) => User, (user) => user.userDetails, {})
   @JoinColumn()
   user: User;
 }

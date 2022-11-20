@@ -4,7 +4,6 @@ import { JwtService } from '@nestjs/jwt';
 import { SignInCredentialsDto } from './dto/signin-credentials.dto';
 import { JwtPayload } from './interface/jwt-payload.interface';
 import { User } from '../users/entities/user.entity';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -31,8 +30,7 @@ export class AuthService {
     if (resp && (await resp.validatePassword(password))) {
       const payload: JwtPayload = {
         id: resp.id,
-        first_name: resp.first_name,
-        last_name: resp.last_name,
+        name: resp.name,
         email: resp.email,
         phone: resp.phone,
         role: resp.role,

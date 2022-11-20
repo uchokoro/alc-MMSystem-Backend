@@ -26,10 +26,7 @@ export class SignupCredentialsDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  first_name: string;
-
-  @ApiProperty()
-  last_name: string;
+  name: string;
 
   @ApiProperty({ nullable: true })
   role?: string;
