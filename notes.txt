@@ -1,0 +1,12 @@
+     username
+-        email
+-        dateCreated
+-        role ( mentor, manager Admin)
+-        password
+-        profile_Complete(True or False)
+-        Country
+-        City
+- 	Social Profile(gitHub, facebook, twitter, linkedln)
+-	website
+-	Bio(About)
+-	Headline

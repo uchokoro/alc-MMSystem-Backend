@@ -6,8 +6,8 @@ import { Logger } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
-    .setTitle('MMM Admin API')
-    .setDescription('MMM Admin API')
+    .setTitle('MMM User API')
+    .setDescription('MMM User API')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

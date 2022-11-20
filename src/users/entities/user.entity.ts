@@ -1,0 +1,99 @@
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import * as bcrypt from 'bcrypt';
+
+@Entity('users')
+export class User extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ type: 'varchar' })
+  name: string;
+
+  @Column({ type: 'varchar', nullable: false, unique: true })
+  phone: string;
+
+  @Column({ type: 'varchar', nullable: true, unique: true })
+  email: string;
+
+  @Column({ default: false, type: 'boolean' })
+  phone_verified: boolean;
+
+  @Column({ default: false, type: 'boolean' })
+  email_verified: boolean;
+
+  @Column({ type: 'varchar', nullable: true })
+  photo: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  username: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  country: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  city: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  github: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  facebook: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  twitter: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  linkedin: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  website: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  bio: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  headline: string;
+
+  @Column({ nullable: true })
+  gender: string;
+
+  @Column({ nullable: true })
+  dob: Date;
+
+  @Column({ type: 'varchar', default: 'Agent' })
+  role: string;
+
+  @Column({ type: 'varchar' })
+  password: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  reset_code: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  salt: string;
+
+  @Column()
+  @CreateDateColumn()
+  created_at?: Date;
+
+  @Column()
+  @UpdateDateColumn()
+  updated_at: Date;
+
+  @Column()
+  @DeleteDateColumn()
+  deleted_at: Date;
+
+  async validatePassword(password: string): Promise<boolean> {
+    const hash = await bcrypt.hash(password, this.salt);
+    return hash === this.password;
+  }
+}
