@@ -11,7 +11,6 @@ The app has the following minimum requirements:
 
 1. `NodeJS` v16
 2. `Yarn`
-3. `MySQL`
 
 # App Features
 
@@ -28,22 +27,12 @@ There are three groups of user categories namely `Admin`, `Mentor Manager(MM)`, 
 for this group
 users is listed as follows:
 
-## Common Features
+## Admin Category:
 
 - Login/Logout
-- Reset Password
-- Change Password
-- Update Profile
-- add job roles
-- List job roles
-- add tech stack
-- List tech stack
-
-## Admin Category
-
 - Create program
-- Invite MM
-- Invite mentor
+- Add MM
+- Add mentor
 - Label/unlabel MM
 - Label/unlabel mentors
 - See the list of all MM
@@ -80,6 +69,8 @@ users is listed as follows:
 
 - Apply to be a mentor
 - Receive application status message
+- Login/Logout
+- Set up my profile
 - Access assigned programs
 - Access the list of assigned tasks
 - Apply to be assigned to a program/tasks
@@ -94,6 +85,8 @@ users is listed as follows:
 
 ## Mentor Manager
 
+- Login/Logout
+- Set up my profile
 - Access assigned programs
 - Add mentor to the system
 - See the list of all mentors
@@ -119,7 +112,7 @@ To use and contribute to the project, do the following:
 1. Fork it to your GitHub account.
 2. Clone the repo with the command git clone to your local machine.
 3. Open a feature branch from the 'dev' branch.
-4. Make sure the name is descriptive for your branch but not too long. Lead with what the branch is doing
+4. Make sure the name is descriptive for your branch but not too long. Lead with what the the branch is doing
    eg new feature or bug but follow this pattern `type/branch-description` eg `feature/add-login-functionality`.
 5. Ensure your branch is up to date with latest changes before pushing, (always pull from origin dev before you push).
 6. Reference the issue you worked on in your PRReference the issue you worked on in your PR.
@@ -135,8 +128,10 @@ To use and contribute to the project, do the following:
 
 ## Design
 
-- The design can be found [here](https://www.figma.com/file/JNZKj3lachPypSOMBOhC1e/MMS-ALC-Mobile-Project?node-id=0%3A1)
-- Work on your Team assigned task e.g. Team 1, Team 2 etc.
+- The design can be find [here](https://www.figma.com/file/JNZKj3lachPypSOMBOhC1e/MMS-ALC-Mobile-Project?node-id=0%3A1)
+- Find the Prototypes
+  here [Admin](https://www.figma.com/file/41d70tx02pRHlj8wvc3WN8/admin-prototype?node-id=0%3A1&t=7tieNXXu5Bu4IaEg-1) [Mentor Manager](https://www.figma.com/file/EeXcwPCnyvw5r45EgyCoIG/Mentor-Manager-prototype?node-id=0%3A1&t=JeA1aXVNqTcX2Yob-1) [Mentors](https://www.figma.com/file/bUlIQe3tOUH14n6aOUeAsF/mentor-prototype?node-id=0%3A1&t=gSJrcVE00ehsLMtU-1)
+- Work on your Team assigned task eg. Team 1, Team 2 etc.
 - NOTE: Stickly adhere to the style guide on the design, buttons, texts etc.
 
 # Creating issue for your Teams
