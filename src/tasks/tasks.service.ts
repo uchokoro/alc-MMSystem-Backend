@@ -5,7 +5,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 @Injectable()
 export class TasksService {
   create(createTaskDto: CreateTaskDto) {
-    return 'This action adds a new task';
+    return createTaskDto;
   }
 
   findAll() {
@@ -17,7 +17,7 @@ export class TasksService {
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+    return `This action updates a #${id} ${updateTaskDto}task`;
   }
 
   remove(id: number) {
