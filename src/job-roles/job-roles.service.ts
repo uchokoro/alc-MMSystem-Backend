@@ -25,7 +25,7 @@ export class JobRolesService {
   }
 
   update(id: number, updateJobRoleDto: UpdateJobRoleDto) {
-    return `This action updates a #${id} jobRole`;
+    return `This action updates a #${id}  ${updateJobRoleDto}jobRole`;
   }
 
   remove(id: number) {
