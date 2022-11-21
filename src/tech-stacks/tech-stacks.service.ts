@@ -25,7 +25,7 @@ export class TechStacksService {
   }
 
   update(id: number, updateTechStackDto: UpdateTechStackDto) {
-    return `This action updates a #${id} techStack`;
+    return `This action updates a #${id} ${updateTechStackDto} techStack`;
   }
 
   remove(id: number) {
