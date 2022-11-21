@@ -28,7 +28,7 @@ There are three groups of user categories namely `Admin`, `Mentor Manager(MM)`, 
 for this group
 users is listed as follows:
 
-## Common Features:
+## Common Features
 
 - Login/Logout
 - Reset Password
@@ -39,7 +39,7 @@ users is listed as follows:
 - add tech stack
 - List tech stack
 
-## Admin Category:
+## Admin Category
 
 - Create program
 - Invite MM
@@ -119,7 +119,7 @@ To use and contribute to the project, do the following:
 1. Fork it to your GitHub account.
 2. Clone the repo with the command git clone to your local machine.
 3. Open a feature branch from the 'dev' branch.
-4. Make sure the name is descriptive for your branch but not too long. Lead with what the the branch is doing
+4. Make sure the name is descriptive for your branch but not too long. Lead with what the branch is doing
    eg new feature or bug but follow this pattern `type/branch-description` eg `feature/add-login-functionality`.
 5. Ensure your branch is up to date with latest changes before pushing, (always pull from origin dev before you push).
 6. Reference the issue you worked on in your PRReference the issue you worked on in your PR.
@@ -135,8 +135,8 @@ To use and contribute to the project, do the following:
 
 ## Design
 
-- The design can be find [here](https://www.figma.com/file/JNZKj3lachPypSOMBOhC1e/MMS-ALC-Mobile-Project?node-id=0%3A1)
-- Work on your Team assigned task eg. Team 1, Team 2 etc.
+- The design can be found [here](https://www.figma.com/file/JNZKj3lachPypSOMBOhC1e/MMS-ALC-Mobile-Project?node-id=0%3A1)
+- Work on your Team assigned task e.g. Team 1, Team 2 etc.
 - NOTE: Stickly adhere to the style guide on the design, buttons, texts etc.
 
 # Creating issue for your Teams
