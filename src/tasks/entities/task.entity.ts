@@ -27,8 +27,8 @@ export class Task {
   @Column({ type: 'varchar' })
   title: string;
 
-  @Column({ type: 'varchar' })
-  description: text;
+  @Column({ type: 'text' })
+  description: string;
 
   @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.UNASSIGNED, })
   status: TaskStatus;
