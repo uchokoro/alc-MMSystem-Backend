@@ -30,12 +30,12 @@ export class Task {
   @Column({ type: 'text' })
   description: string;
 
-  @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.UNASSIGNED, })
+  @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.UNASSIGNED })
   status: TaskStatus;
-
+  /*
   @ManyToOne(() => Programme, (programme) => programme.tasks, { cascade: true, })
   programme: Programme;
-
+*/
   @OneToOne(() => User)
   @JoinColumn()
   created_by: User;
@@ -44,15 +44,15 @@ export class Task {
   @CreateDateColumn()
   created_at: Date;
 
-  @OneToOne(() => User, { nullable: true, })
+  @OneToOne(() => User, { nullable: true })
   @JoinColumn()
   assigned_to: User;
 
-  @OneToOne(() => User, { nullable: true, })
+  @OneToOne(() => User, { nullable: true })
   @JoinColumn()
   assigned_by: User;
 
-  @Column({ type: 'datetime', nullable: true})
+  @Column({ type: 'datetime', nullable: true })
   assigned_at: Date;
 
   @OneToOne(() => User)
@@ -63,12 +63,11 @@ export class Task {
   @UpdateDateColumn()
   last_updated_at: Date;
 
-  @OneToOne(() => User, { nullable: true, })
+  @OneToOne(() => User, { nullable: true })
   @JoinColumn()
   deleted_by: User;
 
   @Column()
   @DeleteDateColumn()
   deleted_at: Date;
-
 }
