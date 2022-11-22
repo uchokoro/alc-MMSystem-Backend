@@ -47,24 +47,21 @@ export class Report {
   @ManyToOne(() => Programme, (programme) => programme.reports, { nullable: true, })
   programme: Programme;
 
-  @OneToOne(() => User)
-  @JoinColumn()
+  @ManyToOne(() => User)
   created_by: User;
 
   @Column()
   @CreateDateColumn()
   created_at?: Date;
 
-  @OneToOne(() => User)
-  @JoinColumn()
+  @ManyToOne(() => User)
   updated_by: User;
 
   @Column()
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => User)
-  @JoinColumn()
+  @ManyToOne(() => User)
   deleted_by: User;
 
   @Column()
