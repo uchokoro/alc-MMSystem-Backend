@@ -71,4 +71,3 @@ export class Report {
   @DeleteDateColumn()
   deleted_at: Date;
 }
-//Anthony please do check and complete this entity class.Thanks
