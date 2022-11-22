@@ -54,14 +54,14 @@ export class Report {
   @CreateDateColumn()
   created_at?: Date;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { nullable: true, })
   updated_by: User;
 
   @Column()
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { nullable: true, })
   deleted_by: User;
 
   @Column()
