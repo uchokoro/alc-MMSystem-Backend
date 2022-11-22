@@ -3,12 +3,9 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Task } from '../../tasks/entities/task.entity';
-import { Report } from '../../reports/entities/report.entity';
 
 export class Criteria {}
 
@@ -22,12 +19,6 @@ export class Programme {
 
   @Column({ type: 'varchar' })
   description: string;
-
-  @OneToMany(() => Task, (task) => task.programme)
-  tasks: Task[];
-
-  @OneToMany(() => Report, (report) => report.programme)
-  reports: Report[];
 
   @Column({ type: 'varchar', nullable: true })
   image: string;
