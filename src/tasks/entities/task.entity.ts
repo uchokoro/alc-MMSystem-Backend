@@ -70,5 +70,4 @@ export class Task {
   @Column()
   @DeleteDateColumn()
   deleted_at: Date;
-
 }
