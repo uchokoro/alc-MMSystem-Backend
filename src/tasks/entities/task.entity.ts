@@ -72,3 +72,4 @@ export class Task {
   deleted_at: Date;
 
 }
+//Anthony please complete this task entity file.Thanks.
