@@ -28,7 +28,7 @@ export class Task {
   title: string;
 
   @Column({ type: 'varchar' })
-  description: string;
+  description: text;
 
   @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.UNASSIGNED, })
   status: TaskStatus;
@@ -57,7 +57,7 @@ export class Task {
 
   @OneToOne(() => User)
   @JoinColumn()
-  last_updated_by: string;
+  last_updated_by: User;
 
   @Column()
   @UpdateDateColumn()
@@ -65,7 +65,7 @@ export class Task {
 
   @OneToOne(() => User, { nullable: true, })
   @JoinColumn()
-  deleted_by: string;
+  deleted_by: User;
 
   @Column()
   @DeleteDateColumn()
