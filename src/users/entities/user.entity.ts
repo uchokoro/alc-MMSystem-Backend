@@ -13,6 +13,7 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserDetail } from '../../user-details/entities/user-detail.entity';
+import { Exclude } from 'class-transformer';
 
 export enum UserRoles {
   Admin = 'admin',
@@ -83,12 +84,15 @@ export class User extends BaseEntity {
   role: UserRoles;
 
   @Column({ type: 'varchar' })
+  @Exclude()
   password: string;
 
   @Column({ type: 'varchar', nullable: true })
+  @Exclude()
   reset_code: string;
 
   @Column({ type: 'varchar', nullable: true })
+  @Exclude()
   salt: string;
 
   @OneToOne(() => UserDetail, (userDetails) => userDetails.user, {
@@ -102,9 +106,9 @@ export class User extends BaseEntity {
     nullable: true,
   })
   @JoinColumn()
-  manger: User;
+  manager: User;
 
-  @OneToMany(() => User, (user) => user.manger, {
+  @OneToMany(() => User, (user) => user.manager, {
     nullable: true,
   })
   @JoinColumn()

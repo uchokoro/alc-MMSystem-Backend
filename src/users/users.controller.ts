@@ -7,6 +7,66 @@ import { ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get()
+  async findUsers() {
+    try {
+      const users = await this.usersService.findAllUsers()
+      if (!users)
+        return new NotFoundException();
+      return users;
+    } catch (error) {
+      throw new InternalServerErrorException()
+    }
+  }
+
+  @Get('mentors')
+  async findMentors() {
+    try {
+      const users = await this.usersService.findAllMentors()
+      if (!users)
+        return new NotFoundException('No mentors found');
+      return users;
+    } catch (error) {
+      throw new InternalServerErrorException()
+    }
+  }
+
+  @Get('mentors-manager')
+  async findMentorsManager() {
+    try {
+      const users = await this.usersService.findAllMentorsManager()
+      if (!users)
+        return new NotFoundException('No mentors Manager found');
+      return users;
+    } catch (error) {
+      throw new InternalServerErrorException()
+    }
+  }
+
+  @Get('mentors-managers/approved')
+  async findMentorsManagerAppr() {
+    try {
+      const users = await this.usersService.findAllManagerAppr()
+      if (!users)
+        return new NotFoundException('No mentors manager approved found');
+      return users;
+    } catch (error) {
+      throw new InternalServerErrorException()
+    }
+  }
+
+  @Get('mentors/approved')
+  async findMentorsAppr() {
+    try {
+      const users = await this.usersService.findAllMentorsAppr()
+      if (!users)
+        return new NotFoundException('No mentors manager approved found');
+      return users;
+    } catch (error) {
+      throw new InternalServerErrorException()
+    }
+  }
+
   /* @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
