@@ -1,4 +1,9 @@
-import { Controller } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -10,60 +15,81 @@ export class UsersController {
   @Get()
   async findUsers() {
     try {
-      const users = await this.usersService.findAllUsers()
-      if (!users)
-        return new NotFoundException();
+      const users = await this.usersService.findAllUsers();
+      if (!users) return new NotFoundException();
       return users;
     } catch (error) {
-      throw new InternalServerErrorException()
+      throw new InternalServerErrorException();
     }
   }
 
   @Get('mentors')
   async findMentors() {
     try {
-      const users = await this.usersService.findAllMentors()
-      if (!users)
-        return new NotFoundException('No mentors found');
+      const users = await this.usersService.findAllMentors();
+      if (!users) return new NotFoundException('No mentors found');
       return users;
     } catch (error) {
-      throw new InternalServerErrorException()
+      throw new InternalServerErrorException();
     }
   }
 
   @Get('mentors-manager')
   async findMentorsManager() {
     try {
-      const users = await this.usersService.findAllMentorsManager()
-      if (!users)
-        return new NotFoundException('No mentors Manager found');
+      const users = await this.usersService.findAllMentorsManager();
+      if (!users) return new NotFoundException('No mentors Manager found');
       return users;
     } catch (error) {
-      throw new InternalServerErrorException()
+      throw new InternalServerErrorException();
     }
   }
 
   @Get('mentors-managers/approved')
   async findMentorsManagerAppr() {
     try {
-      const users = await this.usersService.findAllManagerAppr()
+      const users = await this.usersService.findAllManagerAppr();
       if (!users)
         return new NotFoundException('No mentors manager approved found');
       return users;
     } catch (error) {
-      throw new InternalServerErrorException()
+      throw new InternalServerErrorException();
     }
   }
 
   @Get('mentors/approved')
   async findMentorsAppr() {
     try {
-      const users = await this.usersService.findAllMentorsAppr()
+      const users = await this.usersService.findAllMentorsAppr();
       if (!users)
         return new NotFoundException('No mentors manager approved found');
       return users;
     } catch (error) {
-      throw new InternalServerErrorException()
+      throw new InternalServerErrorException();
+    }
+  }
+
+  @Get('mentors-managers/applicant')
+  async findMentorsManagerApplicant() {
+    try {
+      const users = await this.usersService.findAllManagerApplicant();
+      if (!users)
+        return new NotFoundException('No mentors manager approved found');
+      return users;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  @Get('mentors/applicant')
+  async findMentorsApplicant() {
+    try {
+      const users = await this.usersService.findAllMentorsApplicant();
+      if (!users)
+        return new NotFoundException('No mentors manager approved found');
+      return users;
+    } catch (error) {
+      throw new InternalServerErrorException();
     }
   }
 
