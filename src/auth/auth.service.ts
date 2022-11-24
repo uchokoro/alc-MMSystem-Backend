@@ -17,6 +17,7 @@ export class AuthService {
     signInCredentialsDto: SignInCredentialsDto,
   ): Promise<{ accessToken: string; user: User }> {
     const { email, password } = signInCredentialsDto;
+
     let resp = await this.userService.findOne({ email });
     if (!resp) {
       resp = await this.userService.findOne({ username: email });
@@ -25,10 +26,12 @@ export class AuthService {
     if (!resp) {
       resp = await this.userService.findOne({ phone: email });
     }
+
     if (!resp) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    if (resp && (await resp.validatePassword(password))) {
+
+    if (await resp.validatePassword(password)) {
       const payload: JwtPayload = {
         id: resp.id,
         name: resp.name,
@@ -57,6 +60,7 @@ export class AuthService {
         throw new UnauthorizedException('Admin must have an @andela.com email');
       }
     }
+
     const resp = await this.userService.create(signupCredentialsDto);
     const payload: JwtPayload = {
       id: resp.id,
