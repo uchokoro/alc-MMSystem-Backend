@@ -32,16 +32,7 @@ export class AuthService {
     }
 
     if (await resp.validatePassword(password)) {
-      const payload: JwtPayload = {
-        id: resp.id,
-        name: resp.name,
-        email: resp.email,
-        phone: resp.phone,
-        role: resp.role,
-        username: resp.username,
-        photo: resp.phone,
-      };
-      const accessToken = this.jwtService.sign(payload);
+      const accessToken = this.generateJWT(resp);
 
       return {
         accessToken,
@@ -62,16 +53,7 @@ export class AuthService {
     }
 
     const resp = await this.userService.create(signupCredentialsDto);
-    const payload: JwtPayload = {
-      id: resp.id,
-      name: resp.name,
-      email: resp.email,
-      phone: resp.phone,
-      role: resp.role,
-      username: resp.username,
-      photo: resp.phone,
-    };
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = this.generateJWT(resp);
 
     return {
       accessToken,
@@ -81,5 +63,19 @@ export class AuthService {
 
   async getUser(id: number): Promise<User> {
     return this.userService.findOne({ id: id });
+  }
+
+  private generateJWT(user: User) {
+    const payload: JwtPayload = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      role: user.role,
+      username: user.username,
+      photo: user.phone,
+    };
+
+    return this.jwtService.sign(payload);
   }
 }
