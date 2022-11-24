@@ -16,6 +16,10 @@ export class TasksService {
     return `This action returns a #${id} task`;
   }
 
+  findByStatus(task_status: string) {
+    return `This action returns tasks by ${task_status} of task`
+  }
+
   update(id: number, updateTaskDto: UpdateTaskDto) {
     return `This action updates a #${id} ${updateTaskDto}task`;
   }
