@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User, UserRoles } from './entities/user.entity';
 import { SignupCredentialsDto } from '../auth/dto/signup-credentials.dto';
-import * as bcrypt from 'bcrypt';
 import { EMAIL_ALREADY_EXISTS } from 'src/utils/constants';
 
 @Injectable()
@@ -157,6 +156,7 @@ export class UsersService {
       },
     });
   }
+
   findAll() {
     return `This action returns all users`;
   }
@@ -175,9 +175,5 @@ export class UsersService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
-  }
-
-  private async hashPassword(password: string, salt: string): Promise<string> {
-    return bcrypt.hash(password, salt);
   }
 }
