@@ -1,15 +1,26 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { Task } from './entities/task.entity';
 
 @Injectable()
 export class TasksService {
+  constructor(
+    @InjectRepository(Task) private taskRepository: Repository<Task>,
+  ) {}
   create(createTaskDto: CreateTaskDto) {
-    return createTaskDto;
+    const newTask = this.taskRepository.create({
+      ...createTaskDto,
+      created_at: new Date(),
+    });
+    return this.taskRepository.save(newTask);
   }
 
   findAll() {
-    return `This action returns all tasks`;
+    const tasks = this.taskRepository.find();
+    return tasks;
   }
 
   findOne(id: number) {
@@ -17,10 +28,10 @@ export class TasksService {
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} ${updateTaskDto}task`;
+    return this.taskRepository.update({ id }, { ...updateTaskDto });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} task`;
+    return this.taskRepository.delete(id);
   }
 }
