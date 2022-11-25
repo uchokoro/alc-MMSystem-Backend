@@ -31,7 +31,7 @@ export class Task {
   @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.UNASSIGNED })
   status: TaskStatus;
 
-  @ManyToOne(() => Programme, { cascade: true })
+  @ManyToOne(() => Programme, (programme) => programme.tasks)
   programme: Programme;
 
   @ManyToOne(() => User)

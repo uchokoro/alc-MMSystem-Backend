@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User, UserRoles } from './entities/user.entity';
 import { SignupCredentialsDto } from '../auth/dto/signup-credentials.dto';
-import * as bcrypt from 'bcrypt';
+import { EMAIL_ALREADY_EXISTS } from 'src/utils/constants';
 
 @Injectable()
 export class UsersService {
@@ -14,13 +14,14 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: SignupCredentialsDto): Promise<User> {
-    const salt = await bcrypt.genSalt();
-    createUserDto.password = await this.hashPassword(
-      createUserDto.password,
-      salt,
-    );
-    const user = this.userRepository.create({ ...createUserDto, salt });
-    return await this.userRepository.save(user);
+    try {
+      const user = this.userRepository.create(createUserDto);
+      return await this.createOrUpdate(user);
+    } catch (e) {
+      throw e.code === 'ER_DUP_ENTRY'
+        ? new ConflictException(EMAIL_ALREADY_EXISTS)
+        : e;
+    }
   }
 
   /**
@@ -67,7 +68,7 @@ export class UsersService {
         mentors: false,
         userDetails: true,
       },
-      where: { role: UserRoles.MentorManger },
+      where: { role: UserRoles.MentorManager },
       order: { created_at: 'DESC' },
     });
   }
@@ -85,7 +86,7 @@ export class UsersService {
         userDetails: true,
       },
       where: {
-        role: UserRoles.MentorManger,
+        role: UserRoles.MentorManager,
         userDetails: {
           approved: true,
         },
@@ -127,7 +128,7 @@ export class UsersService {
         userDetails: true,
       },
       where: {
-        role: UserRoles.MentorManger,
+        role: UserRoles.MentorManager,
         userDetails: {
           approved: false,
         },
@@ -155,6 +156,7 @@ export class UsersService {
       },
     });
   }
+
   findAll() {
     return `This action returns all users`;
   }
@@ -171,11 +173,11 @@ export class UsersService {
     return `This action updates a #${id}  ${updateUserDto}user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async createOrUpdate(user: User) {
+    return await this.userRepository.save(user);
   }
 
-  private async hashPassword(password: string, salt: string): Promise<string> {
-    return bcrypt.hash(password, salt);
+  remove(id: number) {
+    return `This action removes a #${id} user`;
   }
 }

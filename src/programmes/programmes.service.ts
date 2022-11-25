@@ -28,11 +28,9 @@ export class ProgrammesService {
 
       return await this.programmeRepository.save(program);
     } catch (e) {
-      if (e.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException(NAME_ALREADY_EXISTS);
-      }
-
-      throw e;
+      throw e.code === 'ER_DUP_ENTRY'
+        ? new ConflictException(NAME_ALREADY_EXISTS)
+        : e;
     }
   }
 
