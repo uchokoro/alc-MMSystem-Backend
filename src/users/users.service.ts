@@ -1,17 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, InternalServerErrorException, Injectable, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { User, UserRoles } from './entities/user.entity';
 import { SignupCredentialsDto } from '../auth/dto/signup-credentials.dto';
 import * as bcrypt from 'bcrypt';
+import { UpdatePasswordDto } from './dto/update-password';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-  ) {}
+  ) { }
 
   async create(createUserDto: SignupCredentialsDto): Promise<User> {
     const salt = await bcrypt.genSalt();
@@ -155,6 +156,36 @@ export class UsersService {
       },
     });
   }
+
+ 
+  async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+    try {
+      const user = await this.userRepository.update(
+        {
+          id: +id,
+        },
+        { ...updateUserDto },
+      );
+
+      if (!user) {
+        throw new NotFoundException(`User does not exist`);
+      }
+      return user;
+    } catch (err) {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async updatePassword(createUserDto: UpdatePasswordDto): Promise<User> {
+    const salt = await bcrypt.genSalt();
+    createUserDto.password = await this.hashPassword(
+      createUserDto.password,
+      salt,
+    );
+    const user = this.userRepository.create({ ...createUserDto, salt });
+    return await this.userRepository.save(user);
+  }
+
   findAll() {
     return `This action returns all users`;
   }
