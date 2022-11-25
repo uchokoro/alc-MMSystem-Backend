@@ -23,8 +23,13 @@ export class TasksService {
     return tasks;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`;
+  findOne(id: {}) {
+    const task = this.taskRepository.findOne({ where: id });
+    return task;
+  }
+
+  findByStatus(task_status: string) {
+    return `This action returns tasks by ${task_status} of task`;
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto) {
