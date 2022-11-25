@@ -32,39 +32,21 @@ export class Task {
 
   @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.UNASSIGNED })
   status: TaskStatus;
-<<<<<<< HEAD
-  /*
-  @ManyToOne(() => Programme, (programme) => programme.tasks, { cascade: true, })
-  programme: Programme;
-*/
-  @OneToOne(() => User)
-  @JoinColumn()
-=======
 
-  @ManyToOne(() => Programme, { cascade: true, })
+  @ManyToOne(() => Programme, { cascade: true })
   programme: Programme;
 
   @ManyToOne(() => User)
->>>>>>> e91e9a049b195b5c595052271fa86f2d153d13c9
   created_by: User;
 
   @Column()
   @CreateDateColumn()
   created_at: Date;
 
-<<<<<<< HEAD
-  @OneToOne(() => User, { nullable: true })
-  @JoinColumn()
+  @ManyToOne(() => User, { nullable: true })
   assigned_to: User;
 
-  @OneToOne(() => User, { nullable: true })
-  @JoinColumn()
-=======
-  @ManyToOne(() => User, { nullable: true, })
-  assigned_to: User;
-
-  @ManyToOne(() => User, { nullable: true, })
->>>>>>> e91e9a049b195b5c595052271fa86f2d153d13c9
+  @ManyToOne(() => User, { nullable: true })
   assigned_by: User;
 
   @Column({ type: 'datetime', nullable: true })
@@ -77,12 +59,7 @@ export class Task {
   @UpdateDateColumn()
   last_updated_at: Date;
 
-<<<<<<< HEAD
-  @OneToOne(() => User, { nullable: true })
-  @JoinColumn()
-=======
-  @ManyToOne(() => User, { nullable: true, })
->>>>>>> e91e9a049b195b5c595052271fa86f2d153d13c9
+  @ManyToOne(() => User, { nullable: true })
   deleted_by: User;
 
   @Column()

@@ -29,6 +29,7 @@ export class TasksService {
   }
 
   findByStatus(task_status: string) {
+    const task = this.taskRepository.findOneBy({ where: task_status });
     return `This action returns tasks by ${task_status} of task`;
   }
 
