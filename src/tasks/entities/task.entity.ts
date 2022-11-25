@@ -10,6 +10,13 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+export enum TaskStatus {
+  COMPLETED = 'completed',
+  IN_PROGRESS = 'in_progress',
+  PENDING = 'pending',
+  UNASSIGNED = 'unassigned',
+}
+
 @Entity('tasks')
 export class Task {
   @PrimaryGeneratedColumn()
