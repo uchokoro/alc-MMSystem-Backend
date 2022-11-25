@@ -1,19 +1,32 @@
+import { Programme } from 'src/programmes/entities/programme.entity';
+import { Task } from 'src/tasks/entities/task.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+export enum ReportType {
+  PROGRAMME_REPORT = 'Programme Report',
+  TASK_REPORT = 'Task Report',
+}
 @Entity('reports')
 export class Report {
   @PrimaryGeneratedColumn()
   id: number;
 
-<<<<<<< HEAD
-  @Column({ type: 'enum', enum: ReportType, default: ReportType.PROGRAMME_REPORT, })
+  @Column({
+    type: 'enum',
+    enum: ReportType,
+    default: ReportType.PROGRAMME_REPORT,
+  })
   type: ReportType;
 
   @Column({ type: 'varchar' })
@@ -28,38 +41,33 @@ export class Report {
   @Column({ type: 'text' })
   recommendations: string;
 
-  @OneToOne(() => Task, { nullable: true, })
+  @OneToOne(() => Task, { nullable: true })
   @JoinColumn()
   task: Task;
 
-  @ManyToOne(() => Programme, (programme) => programme.reports, { nullable: true, })
+  /*
+  @ManyToOne(() => Programme, (programme) => programme.reports, {
+    nullable: true,
+  })
   programme: Programme;
-
+*/
   @ManyToOne(() => User)
   created_by: User;
 
-=======
->>>>>>> e5d180750e7e59c80b98a09668bcbfec720483ea
   @Column()
   @CreateDateColumn()
   created_at?: Date;
 
-<<<<<<< HEAD
-  @ManyToOne(() => User, { nullable: true, })
+  @ManyToOne(() => User, { nullable: true })
   updated_by: User;
 
-=======
->>>>>>> e5d180750e7e59c80b98a09668bcbfec720483ea
   @Column()
   @UpdateDateColumn()
   updated_at: Date;
 
-<<<<<<< HEAD
-  @ManyToOne(() => User, { nullable: true, })
+  @ManyToOne(() => User, { nullable: true })
   deleted_by: User;
 
-=======
->>>>>>> e5d180750e7e59c80b98a09668bcbfec720483ea
   @Column()
   @DeleteDateColumn()
   deleted_at: Date;

@@ -11,22 +11,27 @@ export class ReportsService {
     @InjectRepository(Report) private reportRepository: Repository<Report>,
   ) {}
   create(createReportDto: CreateReportDto) {
-    return createReportDto;
+    const newReport = this.reportRepository.create({
+      ...createReportDto,
+      created_at: new Date(),
+    });
+    return this.reportRepository.save(newReport);
   }
 
   findAll() {
-    return `This action returns all reports`;
+    const reports = this.reportRepository.find();
+    return reports;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} report`;
+  findOne(id: {}) {
+    const task = this.reportRepository.findOne({ where: id });
+    return task;
   }
 
   update(id: number, updateReportDto: UpdateReportDto) {
-    return `This action updates a #${id}  ${updateReportDto}report`;
+    return this.reportRepository.update({ id }, { ...updateReportDto });
   }
-
   remove(id: number) {
-    return `This action removes a #${id} report`;
+    return this.reportRepository.delete(id);
   }
 }
