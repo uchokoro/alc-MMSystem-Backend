@@ -16,7 +16,7 @@ export class UsersService {
   async create(createUserDto: SignupCredentialsDto): Promise<User> {
     try {
       const user = this.userRepository.create(createUserDto);
-      return await this.userRepository.save(user);
+      return await this.createOrUpdate(user);
     } catch (e) {
       throw e.code === 'ER_DUP_ENTRY'
         ? new ConflictException(EMAIL_ALREADY_EXISTS)
@@ -171,6 +171,10 @@ export class UsersService {
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id}  ${updateUserDto}user`;
+  }
+
+  async createOrUpdate(user: User) {
+    return await this.userRepository.save(user);
   }
 
   remove(id: number) {

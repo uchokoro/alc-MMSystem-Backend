@@ -1,4 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { SignInCredentialsDto } from './dto/signin-credentials.dto';
@@ -58,6 +64,41 @@ export class AuthService {
     return {
       accessToken,
       user: resp,
+    };
+  }
+
+  async verifyEmail(email: string, verificationToken: string) {
+    if (!email?.trim()) {
+      throw new BadRequestException('E-mail is required');
+    }
+
+    // TODO: confirm verification token
+    console.log(`verification-token --> ${verificationToken}`);
+
+    const user0 = await this.userService.findOne({ email });
+    if (!user0) {
+      throw new NotFoundException('No record found');
+    }
+
+    if (user0.email_verified) {
+      throw new UnprocessableEntityException('E-mail is already verified');
+    }
+
+    user0.email_verified = true;
+    const user = await this.userService.createOrUpdate(user0);
+    const accessToken = this.generateJWT(user);
+
+    // remove PII
+    delete user.password;
+    delete user.salt;
+
+    return {
+      status: true,
+      data: {
+        ...user,
+        accessToken,
+      },
+      message: 'E-mail verification was successful',
     };
   }
 
