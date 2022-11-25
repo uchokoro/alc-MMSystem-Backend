@@ -17,6 +17,7 @@ export enum ReportType {
   PROGRAMME_REPORT = 'Programme Report',
   TASK_REPORT = 'Task Report',
 }
+
 @Entity('reports')
 export class Report {
   @PrimaryGeneratedColumn()
@@ -45,7 +46,7 @@ export class Report {
   @JoinColumn()
   task: Task;
 
-  @ManyToOne(() => Programme, { nullable: true, })
+  @ManyToOne(() => Programme, { nullable: true })
   programme: Programme;
 
   @ManyToOne(() => User)
@@ -53,7 +54,7 @@ export class Report {
 
   @Column()
   @CreateDateColumn()
-  created_at?: Date;
+  created_at: Date;
 
   @ManyToOne(() => User, { nullable: true })
   updated_by: User;
