@@ -28,9 +28,9 @@ export class TasksService {
     return task;
   }
 
-  findByStatus(task_status: string) {
-    const task = this.taskRepository.findOneBy({ where: task_status });
-    return `This action returns tasks by ${task_status} of task`;
+  findByStatus(task_status: {}): Promise<Task | undefined> {
+    const task = this.taskRepository.findOne({ where: task_status });
+    return task;
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto) {
