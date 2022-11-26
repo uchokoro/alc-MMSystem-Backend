@@ -1,7 +1,11 @@
-import { User } from 'src/users/entities/user.entity';
+import { Programme } from '../../programmes/entities/programme.entity';
+import { BaseTaskDto } from './base-task.dto';
+import { User } from '../../users/entities/user.entity';
+import { PartialType } from '@nestjs/swagger';
 
-export class CreateTaskDto {
+export class CreateTaskDto extends PartialType(BaseTaskDto) {
   title: string;
   description: string;
-  created_by: User;
+  createdBy: User;
+  programme: Programme;
 }
