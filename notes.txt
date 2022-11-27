@@ -99,9 +99,7 @@ program_id
 -        id
 User_id
 Programe_id
-Series Id
 Issue Date
-Expiration Date
 -        date_created
 -        created_by
 -	approvedBy

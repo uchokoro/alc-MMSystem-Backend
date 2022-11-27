@@ -25,7 +25,6 @@ export class ProgrammesService {
         criteria: JSON.stringify(createProgrammeDto.criteria ?? {}, null, 2),
         created_by: createdBy,
       });
-
       return await this.programmeRepository.save(program);
     } catch (e) {
       throw e.code === 'ER_DUP_ENTRY'
