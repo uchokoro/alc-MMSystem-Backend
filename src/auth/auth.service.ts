@@ -44,6 +44,11 @@ export class AuthService {
     if (await resp.validatePassword(password)) {
       const accessToken = this.generateJWT(resp);
 
+      // remove PII
+      delete resp.password;
+      delete resp.salt;
+      delete resp.reset_code;
+
       return {
         accessToken,
         user: resp,
@@ -64,6 +69,11 @@ export class AuthService {
 
     const resp = await this.userService.create(signupCredentialsDto);
     const accessToken = this.generateJWT(resp);
+
+    // remove PII
+    delete resp.password;
+    delete resp.salt;
+    delete resp.reset_code;
 
     return {
       accessToken,
@@ -91,10 +101,6 @@ export class AuthService {
     user0.email_verified = true;
     const user = await this.userService.createOrUpdate(user0);
     const accessToken = this.generateJWT(user);
-
-    // remove PII
-    delete user.password;
-    delete user.salt;
 
     return {
       status: true,

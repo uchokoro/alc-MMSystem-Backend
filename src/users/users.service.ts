@@ -257,7 +257,13 @@ export class UsersService {
   }
 
   async createOrUpdate(user: User): Promise<User> {
-    return await this.userRepository.save(user);
+    const user0 = await this.userRepository.save(user);
+
+    // remove PII
+    delete user0.password;
+    delete user0.salt;
+
+    return user0;
   }
 
   remove(id: number) {
