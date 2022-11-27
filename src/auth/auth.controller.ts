@@ -53,8 +53,10 @@ export class AuthController {
 
   @Post('email/reset-password')
   @HttpCode(HttpStatus.OK)
-  async setNewPassword(@Body() resetPassord: UpdatePasswordDto): Promise<User> {
-    return await this.authService.changePassword(resetPassord);
+  async setNewPassword(
+    @Body() resetPassword: UpdatePasswordDto,
+  ): Promise<User> {
+    return await this.authService.changePassword(resetPassword);
   }
 
   @Put('verify')
