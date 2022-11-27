@@ -1,3 +1,5 @@
+import { Programme } from 'src/programmes/entities/programme.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -7,8 +9,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../../users/entities/user.entity';
-import { Programme } from '../../programmes/entities/programme.entity';
 
 export enum TaskStatus {
   COMPLETED = 'completed',
