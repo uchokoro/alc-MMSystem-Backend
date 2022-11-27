@@ -11,6 +11,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Programme } from '../../programmes/entities/programme.entity';
 
 export enum ReportType {
   PROGRAMME_REPORT = 'Programme Report',

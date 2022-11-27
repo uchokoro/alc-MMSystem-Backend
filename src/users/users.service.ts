@@ -12,6 +12,7 @@ import { User, UserRoles } from './entities/user.entity';
 import { SignupCredentialsDto } from '../auth/dto/signup-credentials.dto';
 import { UpdatePasswordDto } from './dto/update-password';
 import { EMAIL_ALREADY_EXISTS } from 'src/utils/constants';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
