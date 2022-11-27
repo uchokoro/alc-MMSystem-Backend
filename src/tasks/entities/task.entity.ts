@@ -3,9 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -33,6 +31,7 @@ export class Task {
   @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.UNASSIGNED })
   status: TaskStatus;
 
+
   @ManyToOne(() => Programme)
   programme: Programme;
 
@@ -52,6 +51,7 @@ export class Task {
   @Column({ type: 'datetime', nullable: true })
   assignedAt: Date;
 
+
   @ManyToOne(() => User, { nullable: true })
   lastUpdatedBy: User;
 
@@ -61,6 +61,7 @@ export class Task {
 
   @ManyToOne(() => User, { nullable: true })
   deletedBy: User;
+
 
   @Column()
   @DeleteDateColumn()
