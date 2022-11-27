@@ -17,6 +17,7 @@ import * as bcrypt from 'bcrypt';
 import { UserDetail } from '../../user-details/entities/user-detail.entity';
 import { Exclude } from 'class-transformer';
 import { Gender } from '../../utils/enums';
+import { Task } from '../../tasks/entities/task.entity';
 
 export enum UserRoles {
   Admin = 'admin',
@@ -114,6 +115,11 @@ export class User extends BaseEntity {
     nullable: true,
   })
   mentors: User[];
+
+  @OneToMany(() => Task, (task) => task.assignedTo, {
+    nullable: true,
+  })
+  tasks: Task[];
 
   @Column()
   @CreateDateColumn()
