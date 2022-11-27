@@ -1,6 +1,7 @@
 import {
   BaseEntity,
   BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -97,11 +98,10 @@ export class User extends BaseEntity {
   salt: string;
 
   @OneToOne(() => UserDetail, (userDetails) => userDetails.user, {
-  cascade: true,
+    cascade: true,
   })
   @JoinColumn()
   userDetails: UserDetail;
-
 
   @ManyToOne(() => User, (user) => user.mentors, {
     cascade: true,
@@ -130,6 +130,16 @@ export class User extends BaseEntity {
   async hashPassword() {
     this.salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, this.salt);
+  }
+
+  @BeforeUpdate()
+  async hashPasswordBeforeUpdate() {
+    if (
+      !this.password.startsWith('$2a$') &&
+      !this.password.startsWith('$2b$')
+    ) {
+      await this.hashPassword();
+    }
   }
 
   async validatePassword(password: string): Promise<boolean> {

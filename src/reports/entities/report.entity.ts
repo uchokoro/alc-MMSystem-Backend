@@ -1,4 +1,3 @@
-import { Programme } from 'src/programmes/entities/programme.entity';
 import { Task } from 'src/tasks/entities/task.entity';
 import { User } from 'src/users/entities/user.entity';
 import {

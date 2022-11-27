@@ -1,4 +1,3 @@
-
 import {
   BadRequestException,
   Injectable,
@@ -14,19 +13,15 @@ import { JwtPayload } from './interface/jwt-payload.interface';
 import { User, UserRoles } from '../users/entities/user.entity';
 import { SignupCredentialsDto } from './dto/signup-credentials.dto';
 import { MailService } from 'src/common/mail/mail.service';
-import { Repository } from 'typeorm';
 import { UpdatePasswordDto } from 'src/users/dto/update-password';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private userRepository: Repository<User>,
     private userService: UsersService,
     private mailService: MailService,
     private jwtService: JwtService,
-    private configService: ConfigService,
-  ) { }
+  ) {}
 
   async login(
     signInCredentialsDto: SignInCredentialsDto,
@@ -115,44 +110,44 @@ export class AuthService {
     return this.userService.findOne({ id: id });
   }
 
-
   //Password recovery
-
   async forgotPassword(forgotPasswordDto: UpdatePasswordDto): Promise<User> {
-    const resp = await this.userService.findOne({ email: forgotPasswordDto.email });
+    const resp = await this.userService.findOne({
+      email: forgotPasswordDto.email,
+    });
 
     if (!resp) {
       throw new BadRequestException('Invalid email');
     }
+
     const password = crypto.randomUUID();
-    resp.reset_code = bcrypt.hashSync(crypto.randomUUID(), 8)
+    resp.reset_code = bcrypt.hashSync(password, 8);
 
     await this.mailService.send({
-      from: this.configService.get<string>('MAIL_USER'),
       to: resp.email,
       subject: 'Forgot Password',
       html: `
           <h3>Hello ${resp.email}!</h3>
-          <p>Please use this rest_code ${resp.password}" to reset your password.</p>
+          <p>Please use this reset-code <strong>${password}</strong> to reset your password.</p>
       `,
     });
 
-    return await this.userRepository.save(resp)
+    return await this.userService.createOrUpdate(resp);
   }
 
   async changePassword(changePasswordDto: UpdatePasswordDto): Promise<User> {
     const resp = await this.userService.updatePassword(changePasswordDto);
+
     await this.mailService.send({
-      from: this.configService.get<string>('MAIL_USER'),
       to: resp.email,
-      subject: 'Succes',
+      subject: 'Success',
       html: `
-        <p>Succes to reset your password.</p>
-    `,
+          <p>Your password reset was successful.</p>
+      `,
     });
+
     return resp;
-  };
-}
+  }
 
   private generateJWT(user: User) {
     const payload: JwtPayload = {
@@ -167,5 +162,4 @@ export class AuthService {
 
     return this.jwtService.sign(payload);
   }
-
-
+}
