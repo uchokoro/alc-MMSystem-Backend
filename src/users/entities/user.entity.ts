@@ -15,6 +15,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { UserDetail } from '../../user-details/entities/user-detail.entity';
 import { Exclude } from 'class-transformer';
+import { Gender } from '../../utils/enums';
 
 export enum UserRoles {
   Admin = 'admin',
@@ -75,8 +76,8 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   headline: string;
 
-  @Column({ nullable: true })
-  gender: string;
+  @Column({ type: 'enum', enum: Gender, default: Gender.FEMALE })
+  gender: Gender;
 
   @Column({ nullable: true })
   dob: Date;
@@ -97,11 +98,10 @@ export class User extends BaseEntity {
   salt: string;
 
   @OneToOne(() => UserDetail, (userDetails) => userDetails.user, {
-  cascade: true,
+    cascade: true,
   })
   @JoinColumn()
   userDetails: UserDetail;
-
 
   @ManyToOne(() => User, (user) => user.mentors, {
     cascade: true,

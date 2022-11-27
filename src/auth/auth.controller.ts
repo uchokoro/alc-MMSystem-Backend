@@ -3,7 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
-  HttpStatus, 
+  HttpStatus,
   HttpException,
   Param,
   Post,
@@ -47,20 +47,16 @@ export class AuthController {
     return await this.authService.register(signUpCredentialsDto);
   }
 
- 
   @Get('email/forgot-password/:email')
-  async ForgotPassword(@Param() params){
+  async ForgotPassword(@Param() params) {
     return await this.authService.forgotPassword(params.email);
   }
 
   @Post('email/reset-password')
   @HttpCode(HttpStatus.OK)
-  async setNewPassord(@Body() resetPassword: UpdatePasswordDto): Promise<IResponse> {
-      return await this.authService.changePassword(resetPassword)
+  async setNewPassord(@Body() resetPassword: UpdatePasswordDto): Promise<User> {
+    return await this.authService.changePassword(resetPassword);
   }
-
-}
-
 
   @Put('verify')
   async verifyEmail(
@@ -69,5 +65,4 @@ export class AuthController {
   ) {
     return await this.authService.verifyEmail(email, token);
   }
-
 }

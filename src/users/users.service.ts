@@ -1,4 +1,12 @@
-import { BadRequestException, InternalServerErrorException, Injectable, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  BadRequestException,
+  InternalServerErrorException,
+  Injectable,
+  NotFoundException,
+  HttpException,
+  HttpStatus,
+  ConflictException,
+} from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, UpdateResult } from 'typeorm';
@@ -8,13 +16,12 @@ import * as bcrypt from 'bcrypt';
 import { UpdatePasswordDto } from './dto/update-password';
 import { EMAIL_ALREADY_EXISTS } from 'src/utils/constants';
 
-
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async create(createUserDto: SignupCredentialsDto): Promise<User> {
     try {
@@ -160,7 +167,10 @@ export class UsersService {
     });
   }
 
-  async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+  async updateUser(
+    id: number,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UpdateResult> {
     try {
       const user = await this.userRepository.update(
         {
@@ -187,7 +197,6 @@ export class UsersService {
     const user = this.userRepository.create({ ...createUserDto, salt });
     return await this.userRepository.save(user);
   }
-
 
   findAll() {
     return `This action returns all users`;
@@ -223,6 +232,7 @@ export class UsersService {
       twitter,
       website,
       headline,
+      reset_code,
     } = updateUserDto;
 
     if (email && email != user0.email) {
@@ -240,6 +250,7 @@ export class UsersService {
     user0.facebook = facebook;
     user0.twitter = twitter;
     user0.website = website;
+    user0.reset_code = reset_code;
 
     return await this.createOrUpdate(user0);
   }
@@ -250,5 +261,9 @@ export class UsersService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async hashPassword(password, salt) {
+    return await bcrypt.hash(password, salt);
   }
 }

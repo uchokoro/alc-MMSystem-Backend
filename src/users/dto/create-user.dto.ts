@@ -25,4 +25,5 @@ export class CreateUserDto {
 
   bio: string;
   headline: string;
+  reset_code?: string;
 }
