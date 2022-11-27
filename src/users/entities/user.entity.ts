@@ -1,5 +1,6 @@
 import {
   BaseEntity,
+  BeforeInsert,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -13,11 +14,12 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserDetail } from '../../user-details/entities/user-detail.entity';
+import { Exclude } from 'class-transformer';
 
 export enum UserRoles {
   Admin = 'admin',
   Mentor = 'mentor',
-  MentorManger = 'mentor-manger',
+  MentorManager = 'mentor-manager',
 }
 
 @Entity('users')
@@ -83,12 +85,15 @@ export class User extends BaseEntity {
   role: UserRoles;
 
   @Column({ type: 'varchar' })
+  @Exclude()
   password: string;
 
   @Column({ type: 'varchar', nullable: true })
+  @Exclude()
   reset_code: string;
 
   @Column({ type: 'varchar', nullable: true })
+  @Exclude()
   salt: string;
 
   @OneToOne(() => UserDetail, (userDetails) => userDetails.user, {
@@ -102,13 +107,11 @@ export class User extends BaseEntity {
     cascade: true,
     nullable: true,
   })
-  @JoinColumn()
-  manger: User;
+  manager: User;
 
-  @OneToMany(() => User, (user) => user.manger, {
+  @OneToMany(() => User, (user) => user.manager, {
     nullable: true,
   })
-  @JoinColumn()
   mentors: User[];
 
   @Column()
@@ -123,7 +126,15 @@ export class User extends BaseEntity {
   @DeleteDateColumn()
   deleted_at: Date;
 
+  @BeforeInsert()
+  async hashPassword() {
+    this.salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, this.salt);
+  }
+
   async validatePassword(password: string): Promise<boolean> {
+    if (!password) return false;
+
     const hash = await bcrypt.hash(password, this.salt);
     return hash === this.password;
   }

@@ -2,7 +2,13 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
+  HttpStatus, 
+  HttpException,
+  Param,
   Post,
+  Put,
+  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -13,6 +19,7 @@ import { SignupCredentialsDto } from './dto/signup-credentials.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './decorator/get-user.decorator';
 import { User } from '../users/entities/user.entity';
+import { UpdatePasswordDto } from 'src/users/dto/update-password';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -39,4 +46,28 @@ export class AuthController {
   ) {
     return await this.authService.register(signUpCredentialsDto);
   }
+
+ 
+  @Get('email/forgot-password/:email')
+  async ForgotPassword(@Param() params){
+    return await this.authService.forgotPassword(params.email);
+  }
+
+  @Post('email/reset-password')
+  @HttpCode(HttpStatus.OK)
+  async setNewPassord(@Body() resetPassword: UpdatePasswordDto): Promise<IResponse> {
+      return await this.authService.changePassword(resetPassword)
+  }
+
+}
+
+
+  @Put('verify')
+  async verifyEmail(
+    @Query('email') email: string,
+    @Query('token') token: string,
+  ) {
+    return await this.authService.verifyEmail(email, token);
+  }
+
 }
