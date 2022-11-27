@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -169,11 +173,50 @@ export class UsersService {
     return await this.userRepository.findOne({ where: param });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id}  ${updateUserDto}user`;
+  /**
+   * Update user with #${id}
+   *
+   * @return  {Promise<User>} [return User]
+   */
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+    const user0 = await this.userRepository.findOneBy({ id });
+    if (!user0) {
+      throw new NotFoundException('User not found');
+    }
+
+    const {
+      bio,
+      city,
+      country,
+      email,
+      github,
+      linkedin,
+      facebook,
+      twitter,
+      website,
+      headline,
+    } = updateUserDto;
+
+    if (email && email != user0.email) {
+      throw new ConflictException('E-mail cannot be updated');
+    }
+
+    if (!country?.trim()) user0.country = country;
+    if (!city?.trim()) user0.city = city;
+    if (!bio?.trim()) user0.bio = bio;
+
+    if (!headline?.trim()) user0.headline = headline;
+
+    user0.github = github;
+    user0.linkedin = linkedin;
+    user0.facebook = facebook;
+    user0.twitter = twitter;
+    user0.website = website;
+
+    return await this.createOrUpdate(user0);
   }
 
-  async createOrUpdate(user: User) {
+  async createOrUpdate(user: User): Promise<User> {
     return await this.userRepository.save(user);
   }
 
