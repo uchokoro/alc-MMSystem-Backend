@@ -4,7 +4,6 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  HttpException,
   Param,
   Post,
   Put,
@@ -48,13 +47,15 @@ export class AuthController {
   }
 
   @Get('email/forgot-password/:email')
-  async ForgotPassword(@Param() params) {
+  async forgotPassword(@Param() params) {
     return await this.authService.forgotPassword(params.email);
   }
 
   @Post('email/reset-password')
   @HttpCode(HttpStatus.OK)
-  async setNewPassord(@Body() resetPassword: UpdatePasswordDto): Promise<User> {
+  async setNewPassword(
+    @Body() resetPassword: UpdatePasswordDto,
+  ): Promise<User> {
     return await this.authService.changePassword(resetPassword);
   }
 

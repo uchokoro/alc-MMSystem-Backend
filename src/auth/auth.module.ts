@@ -4,12 +4,11 @@ import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 import { CoreSec } from 'src/utils/security';
-import { MailService } from '../common/mail/mail.service';
-import { ConfigService } from '@nestjs/config';
+import { MailModule } from 'src/common/mail/mail.module';
 
 @Module({
-  imports: [UsersModule, ...CoreSec],
-  providers: [AuthService, JwtStrategy, MailService, ConfigService],
+  imports: [UsersModule, MailModule, ...CoreSec],
+  providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
   exports: [AuthService],
 })

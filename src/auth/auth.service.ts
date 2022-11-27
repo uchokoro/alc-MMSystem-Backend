@@ -13,9 +13,7 @@ import { JwtPayload } from './interface/jwt-payload.interface';
 import { User, UserRoles } from '../users/entities/user.entity';
 import { SignupCredentialsDto } from './dto/signup-credentials.dto';
 import { MailService } from 'src/common/mail/mail.service';
-import { Repository, UpdateResult } from 'typeorm';
 import { UpdatePasswordDto } from 'src/users/dto/update-password';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +21,6 @@ export class AuthService {
     private userService: UsersService,
     private mailService: MailService,
     private jwtService: JwtService,
-    private configService: ConfigService,
   ) {}
 
   async login(
@@ -47,6 +44,11 @@ export class AuthService {
     if (await resp.validatePassword(password)) {
       const accessToken = this.generateJWT(resp);
 
+      // remove PII
+      delete resp.password;
+      delete resp.salt;
+      delete resp.reset_code;
+
       return {
         accessToken,
         user: resp,
@@ -67,6 +69,11 @@ export class AuthService {
 
     const resp = await this.userService.create(signupCredentialsDto);
     const accessToken = this.generateJWT(resp);
+
+    // remove PII
+    delete resp.password;
+    delete resp.salt;
+    delete resp.reset_code;
 
     return {
       accessToken,
@@ -95,10 +102,6 @@ export class AuthService {
     const user = await this.userService.createOrUpdate(user0);
     const accessToken = this.generateJWT(user);
 
-    // remove PII
-    delete user.password;
-    delete user.salt;
-
     return {
       status: true,
       data: {
@@ -114,10 +117,7 @@ export class AuthService {
   }
 
   //Password recovery
-
-  async forgotPassword(
-    forgotPasswordDto: UpdatePasswordDto,
-  ): Promise<UpdateResult> {
+  async forgotPassword(forgotPasswordDto: UpdatePasswordDto): Promise<User> {
     const resp = await this.userService.findOne({
       email: forgotPasswordDto.email,
     });
@@ -125,32 +125,33 @@ export class AuthService {
     if (!resp) {
       throw new BadRequestException('Invalid email');
     }
+
     const password = crypto.randomUUID();
-    resp.reset_code = bcrypt.hashSync(crypto.randomUUID(), 8);
+    resp.reset_code = bcrypt.hashSync(password, 8);
 
     await this.mailService.send({
-      from: this.configService.get<string>('MAIL_USER'),
       to: resp.email,
       subject: 'Forgot Password',
       html: `
           <h3>Hello ${resp.email}!</h3>
-          <p>Please use this rest_code ${resp.password}" to reset your password.</p>
+          <p>Please use this reset-code <strong>${password}</strong> to reset your password.</p>
       `,
     });
 
-    return await this.userService.updateUser(resp.id, resp);
+    return await this.userService.createOrUpdate(resp);
   }
 
   async changePassword(changePasswordDto: UpdatePasswordDto): Promise<User> {
     const resp = await this.userService.updatePassword(changePasswordDto);
+
     await this.mailService.send({
-      from: this.configService.get<string>('MAIL_USER'),
       to: resp.email,
-      subject: 'Succes',
+      subject: 'Success',
       html: `
-        <p>Succes to reset your password.</p>
-    `,
+          <p>Your password reset was successful.</p>
+      `,
     });
+
     return resp;
   }
 

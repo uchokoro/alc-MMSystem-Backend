@@ -21,12 +21,18 @@ export class MailService {
 
   send(data: IMailGetData) {
     return new Promise((res, rej) => {
-      this.transporter.sendMail(data, function (error, body) {
-        if (error) {
-          rej(error);
-        }
-        res(body);
-      });
+      this.transporter.sendMail(
+        {
+          ...data,
+          from: data.from ?? this.configService.get<string>('MAIL_USER'),
+        },
+        function (error, body) {
+          if (error) {
+            rej(error);
+          }
+          res(body);
+        },
+      );
     });
   }
 }

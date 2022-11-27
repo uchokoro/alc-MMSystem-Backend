@@ -1,18 +1,15 @@
 import {
   BadRequestException,
+  ConflictException,
   InternalServerErrorException,
   Injectable,
   NotFoundException,
-  HttpException,
-  HttpStatus,
-  ConflictException,
 } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, UpdateResult } from 'typeorm';
 import { User, UserRoles } from './entities/user.entity';
 import { SignupCredentialsDto } from '../auth/dto/signup-credentials.dto';
-import * as bcrypt from 'bcrypt';
 import { UpdatePasswordDto } from './dto/update-password';
 import { EMAIL_ALREADY_EXISTS } from 'src/utils/constants';
 
@@ -168,34 +165,40 @@ export class UsersService {
   }
 
   async updateUser(
-    id: number,
+    id: string,
     updateUserDto: UpdateUserDto,
   ): Promise<UpdateResult> {
     try {
       const user = await this.userRepository.update(
-        {
-          id: +id,
-        },
+        { id: +id },
         { ...updateUserDto },
       );
 
       if (!user) {
         throw new NotFoundException(`User does not exist`);
       }
+
       return user;
     } catch (err) {
       throw new InternalServerErrorException();
     }
   }
 
-  async updatePassword(createUserDto: UpdatePasswordDto): Promise<User> {
-    const salt = await bcrypt.genSalt();
-    createUserDto.password = await this.hashPassword(
-      createUserDto.password,
-      salt,
-    );
-    const user = this.userRepository.create({ ...createUserDto, salt });
-    return await this.userRepository.save(user);
+  async updatePassword(updateUserDto: UpdatePasswordDto): Promise<User> {
+    const { email, password } = updateUserDto;
+    if (!email?.trim()) {
+      throw new BadRequestException('E-mail is required');
+    }
+
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    user.password = password;
+    await this.userRepository.update({ email }, { password });
+
+    return user;
   }
 
   findAll() {
@@ -256,7 +259,13 @@ export class UsersService {
   }
 
   async createOrUpdate(user: User): Promise<User> {
-    return await this.userRepository.save(user);
+    const user0 = await this.userRepository.save(user);
+
+    // remove PII
+    delete user0.password;
+    delete user0.salt;
+
+    return user0;
   }
 
   remove(id: number) {
