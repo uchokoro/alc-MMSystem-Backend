@@ -1,6 +1,11 @@
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { jwtConstants } from 'src/auth/constants';
+
+export { jwtConstants };
+
+const jwtConstants = {
+  secret: 'secretKey',
+};
 
 export const CoreSec = [
   PassportModule.register({ defaultStrategy: 'jwt' }),
