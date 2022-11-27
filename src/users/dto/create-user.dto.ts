@@ -1,58 +1,28 @@
-import { Column } from "typeorm";
+import { IsIn, IsNotEmpty } from 'class-validator';
+import { Gender } from 'src/utils/enums';
 
 export class CreateUserDto {
-    @Column({ type: 'varchar' })
+  @IsNotEmpty()
   name: string;
 
-  @Column({ type: 'varchar', nullable: true })
-  phone?: string;
-
-  @Column({ type: 'varchar', nullable: true, unique: true })
+  phone: string;
   email: string;
-
-  @Column({ default: false, type: 'boolean' })
-  phone_verified: boolean;
-
-  @Column({ default: false, type: 'boolean' })
-  email_verified: boolean;
-
-  @Column({ type: 'varchar', nullable: true })
-  photo: string;
-
-  @Column({ type: 'varchar', nullable: true })
   username: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  country: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  city: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  github: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  facebook: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  twitter: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  linkedin: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  website: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  bio: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  headline: string;
-
-  @Column({ nullable: true })
-  gender: string;
-
-  @Column({ nullable: true })
+  photo: string;
   dob: Date;
 
+  @IsIn(['male', 'female'])
+  gender: Gender;
+
+  country: string;
+  city: string;
+
+  github: string;
+  facebook: string;
+  twitter: string;
+  linkedin: string;
+  website: string;
+
+  bio: string;
+  headline: string;
 }

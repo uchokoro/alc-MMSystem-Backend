@@ -7,6 +7,8 @@ import {
   HttpException,
   Param,
   Post,
+  Put,
+  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -58,5 +60,14 @@ export class AuthController {
   }
 
 }
+
+
+  @Put('verify')
+  async verifyEmail(
+    @Query('email') email: string,
+    @Query('token') token: string,
+  ) {
+    return await this.authService.verifyEmail(email, token);
+  }
 
 }
