@@ -1,9 +1,9 @@
 import {
+  BadRequestException,
+  ConflictException,
   InternalServerErrorException,
   Injectable,
   NotFoundException,
-  ConflictException,
-  BadRequestException,
 } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -235,6 +235,7 @@ export class UsersService {
       twitter,
       website,
       headline,
+      reset_code,
     } = updateUserDto;
 
     if (email && email != user0.email) {
@@ -252,6 +253,7 @@ export class UsersService {
     user0.facebook = facebook;
     user0.twitter = twitter;
     user0.website = website;
+    user0.reset_code = reset_code;
 
     return await this.createOrUpdate(user0);
   }
@@ -268,5 +270,9 @@ export class UsersService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async hashPassword(password, salt) {
+    return await bcrypt.hash(password, salt);
   }
 }
