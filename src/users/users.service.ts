@@ -11,7 +11,6 @@ import { Repository, UpdateResult } from 'typeorm';
 import { User, UserRoles } from './entities/user.entity';
 import { SignupCredentialsDto } from '../auth/dto/signup-credentials.dto';
 import { UpdatePasswordDto } from './dto/update-password';
-import { EMAIL_ALREADY_EXISTS } from 'src/utils/constants';
 
 @Injectable()
 export class UsersService {
@@ -21,14 +20,8 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: SignupCredentialsDto): Promise<User> {
-    try {
-      const user = this.userRepository.create(createUserDto);
-      return await this.createOrUpdate(user);
-    } catch (e) {
-      throw e.code === 'ER_DUP_ENTRY'
-        ? new ConflictException(EMAIL_ALREADY_EXISTS)
-        : e;
-    }
+    const user = this.userRepository.create(createUserDto);
+    return await this.createOrUpdate(user);
   }
 
   /**
