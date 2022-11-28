@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  InternalServerErrorException,
   NotFoundException,
   Param,
   ParseIntPipe,
@@ -52,7 +51,8 @@ export class TasksController {
 
   @Get('creation-dates/start/:startDate/end/:endDate')
   async getTasksByCreationDateRange(
-    @Param('startDate') startDate: Date, @Param('endDate') endDate: Date,
+    @Param('startDate') startDate: Date,
+    @Param('endDate') endDate: Date,
   ) {
     const queryEndDate = new Date(endDate);
     queryEndDate.setDate(queryEndDate.getDate() + 1);
