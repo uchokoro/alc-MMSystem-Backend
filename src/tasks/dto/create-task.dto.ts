@@ -1,11 +1,16 @@
-import { Programme } from '../../programmes/entities/programme.entity';
 import { BaseTaskDto } from './base-task.dto';
-import { User } from '../../users/entities/user.entity';
-import { PartialType } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateTaskDto extends PartialType(BaseTaskDto) {
+  @ApiProperty()
+  @IsNotEmpty()
   title: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
   description: string;
-  createdBy: User;
-  programme: Programme;
+
+  @ApiProperty()
+  programmeId?: number;
 }

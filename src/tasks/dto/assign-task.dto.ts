@@ -1,8 +1,9 @@
-import { PartialType } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { BaseTaskDto } from './base-task.dto';
-import { User } from '../../users/entities/user.entity';
+import { IsNotEmpty } from 'class-validator';
 
 export class AssignTaskDto extends PartialType(BaseTaskDto) {
-  assignedTo: User;
-  assignedBy: User;
+  @ApiProperty()
+  @IsNotEmpty()
+  assignedToId: number;
 }

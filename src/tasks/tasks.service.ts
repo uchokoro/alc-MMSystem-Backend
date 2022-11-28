@@ -5,22 +5,37 @@ import { AssignTaskDto } from './dto/assign-task.dto';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task, TaskStatus } from './entities/task.entity';
+import { User } from '../users/entities/user.entity';
+import { UsersService } from '../users/users.service';
+import { ProgrammesService } from '../programmes/programmes.service';
 
 @Injectable()
 export class TasksService {
   constructor(
     @InjectRepository(Task) private taskRepository: Repository<Task>,
+    private userService: UsersService,
+    private programmesService: ProgrammesService,
   ) {}
 
-  async createNewTask(createTaskDto: CreateTaskDto): Promise<Task> {
-    const newTask = this.taskRepository.create({ ...createTaskDto });
-    newTask['lastUpdatedBy'] = newTask['createdBy'];
+  async createNewTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
+    const { programmeId, ...data } = createTaskDto;
+    user = await this.userService.findOne({ id: user.id });
+    const programme = await this.programmesService.findOne({
+      id: programmeId,
+    });
+    const newTask = this.taskRepository.create({
+      ...data,
+      createdBy: user,
+      programme,
+    });
+
     return await this.taskRepository.save(newTask);
   }
 
   async findAllTasks(): Promise<Task[]> {
     return await this.taskRepository.find({
       order: { createdAt: 'DESC' },
+      relations: ['programme', 'createdBy', 'assignedBy', 'assignedTo'],
     });
   }
 
@@ -100,13 +115,33 @@ export class TasksService {
     });
   }
 
-  async assignTaskToUser(id: number, assignTaskDto: AssignTaskDto) {
-    assignTaskDto['lastUpdatedBy'] = assignTaskDto['assignedBy'];
-    assignTaskDto['assignedAt'] = new Date();
-    await this.taskRepository.update(id, { ...assignTaskDto });
+  async assignTaskToUser(id: number, assignTaskDto: AssignTaskDto, user: User) {
+    const task = await this.findOneById(id);
+    if (!task) {
+      throw new ConflictException('Task not found');
+    }
+
+    user = await this.userService.findOne({ id: user.id });
+    const assignedTo = await this.userService.findOne({
+      id: assignTaskDto.assignedToId,
+    });
+
+    await this.taskRepository.update(id, {
+      assignedAt: new Date(),
+      assignedBy: user,
+      assignedTo,
+      status: TaskStatus.IN_PROGRESS,
+    });
   }
 
-  async updateTask(id: number, updateTaskDto: UpdateTaskDto) {
+  async updateTask(id: number, updateTaskDto: UpdateTaskDto, user: User) {
+    const task = await this.findOneById(id);
+    if (!task) {
+      throw new ConflictException('Task not found');
+    }
+
+    user = await this.userService.findOne({ id: user.id });
+    updateTaskDto['lastUpdatedBy'] = user;
     await this.taskRepository.update(id, { ...updateTaskDto });
   }
 
