@@ -12,7 +12,7 @@ import { Chat } from './chat.entity';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'bmw123',
+      password: 'Password',
       database: 'chat',
       entities: [Chat],
       synchronize: false,
