@@ -12,6 +12,8 @@ import { JobRolesModule } from './job-roles/job-roles.module';
 import { TechStacksModule } from './tech-stacks/tech-stacks.module';
 import { ReportsModule } from './reports/reports.module';
 import { CertificatesModule } from './certificates/certificates.module';
+import { PostsModule } from './Posts/Posts.module';
+import { CommentModule } from './Comments/Comments.module';
 
 @Module({
   imports: [
@@ -38,6 +40,8 @@ import { CertificatesModule } from './certificates/certificates.module';
     TechStacksModule,
     ReportsModule,
     CertificatesModule,
+    CommentModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

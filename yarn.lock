@@ -802,7 +802,7 @@
 
 "@nestjs/swagger@^6.1.3":
   version "6.1.3"
-  resolved "https://registry.npmjs.org/@nestjs/swagger/-/swagger-6.1.3.tgz"
+  resolved "https://registry.yarnpkg.com/@nestjs/swagger/-/swagger-6.1.3.tgz#ee274ceb645cb73cb7986027663a742394d51869"
   integrity sha512-H9C/yRgLFb5QrAt6iGrYmIX9X7Q0zXkgZaTNUATljUBra+RCWrEUbLHBcGjTAOtcIyGV/vmyCLv68YSVcZoE0Q==
   dependencies:
     "@nestjs/mapped-types" "1.2.0"
